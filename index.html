@@ -1,736 +1,2137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Club - Protect Our Planet</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Green Club — Sustainability Starts Here</title>
 
-    <link rel="stylesheet" href="MyProject_Styles.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oswald:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-        /* Header */
-        header {
-            background: linear-gradient(135deg, #4CAF50, #45a049);
-            color: white;
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+  <!-- Iconify -->
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 
-        nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-        }
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
+  <style>
+    /* ═══════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
+    :root {
+      --bg-primary: #000000;
+      --bg-secondary: #090A0B;
+      --bg-card: #0F1012;
+      --bg-elevated: #16181D;
+      --text-primary: #FFFFFF;
+      --text-secondary: #E2E8F0;
+      --text-muted: #94A3B8;
+      --text-dim: #64748B;
+      --accent: #22C55E;
+      --accent-light: #4ADE80;
+      --accent-dark: #15803D;
+      --accent-glow: rgba(34,197,94,0.25);
+      --accent-subtle: rgba(34,197,94,0.08);
+      --border: rgba(255,255,255,0.08);
+      --border-hover: rgba(34,197,94,0.3);
+      --glass: rgba(15,16,18,0.85);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --radius-full: 9999px;
+      --font-body: 'Inter', -apple-system, sans-serif;
+      --font-display: 'Oswald', sans-serif;
+      --transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            transition: opacity 0.3s;
-        }
+    html { scroll-behavior: smooth; }
 
-        .nav-links a:hover {
-            opacity: 0.8;
-        }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.625;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
+    ::selection { background: var(--accent); color: #000; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: var(--accent-dark); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: white;
-            margin: 3px 0;
-            transition: 0.3s;
-        }
+    /* ═══════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════ */
+    .navbar-green {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      background: var(--glass);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      padding: 6px 8px;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      transition: var(--transition);
+      max-width: 95vw;
+    }
 
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(76, 175, 80, 0.9), rgba(76, 175, 80, 0.7)), 
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%234CAF50" width="1200" height="600"/><circle fill="%232db347" opacity="0.3" cx="200" cy="150" r="80"/><circle fill="%232db347" opacity="0.4" cx="900" cy="400" r="120"/><circle fill="%232db347" opacity="0.2" cx="600" cy="250" r="60"/><path fill="%231ea73e" d="M100 500Q300 450 500 480Q700 510 900 470L1200 500L1200 600L0 600Z"/></svg>');
-            background-size: cover;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            margin-top: 70px;
-        }
+    .navbar-green.scrolled {
+      border-color: var(--border-hover);
+      box-shadow: 0 0 30px var(--accent-glow);
+    }
 
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease;
-        }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
 
-        .hero-content p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.2s both;
-        }
+    .nav-logo .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
 
-        .cta-button {
-            display: inline-block;
-            background: #FF9800;
-            color: white;
-            padding: 1rem 2rem;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: all 0.3s;
-            animation: fadeInUp 1s ease 0.4s both;
-        }
+    .nav-link-custom {
+      padding: 8px 16px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-radius: var(--radius-full);
+      transition: var(--transition);
+      white-space: nowrap;
+    }
 
-        .cta-button:hover {
-            background: #F57C00;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(255,152,0,0.3);
-        }
+    .nav-link-custom:hover, .nav-link-custom.active {
+      color: var(--text-primary);
+      background: rgba(255,255,255,0.06);
+    }
 
-        /* Sections */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
+    .nav-cta {
+      padding: 8px 20px;
+      background: var(--accent);
+      color: #000 !important;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-radius: var(--radius-full);
+      text-decoration: none;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
 
-        section {
-            padding: 5rem 0;
-        }
+    .nav-cta:hover {
+      background: var(--accent-light);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
 
-        h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #2E7D32;
-        }
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-size: 22px;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: var(--radius-full);
+      transition: var(--transition);
+    }
 
-        /* About Section */
-        .about {
-            background: #f8fff8;
-        }
+    .mobile-toggle:hover { background: rgba(255,255,255,0.06); }
 
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
+    .nav-links-desktop { display: flex; align-items: center; gap: 2px; }
 
-        .about-text p {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            color: #555;
-        }
+    @media (max-width: 900px) {
+      .nav-links-desktop { display: none; }
+      .mobile-toggle { display: flex; align-items: center; justify-content: center; }
+      .navbar-green.open .nav-links-desktop {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        margin-top: 8px;
+        background: var(--glass);
+        backdrop-filter: blur(24px);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 8px;
+        gap: 2px;
+      }
+    }
 
-        .about-image {
-            text-align: center;
-        }
+    /* ═══════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 120px 24px 80px;
+    }
 
-        .about-image img {
-            max-width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
 
-        /* Features Grid */
-        .features {
-            background: white;
-        }
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(40%) brightness(0.35);
+      transform: scale(1.08);
+      transition: transform 8s ease-out;
+    }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
+    .hero:hover .hero-bg img { transform: scale(1); }
 
-        .feature-card {
-            text-align: center;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(0,0,0,0.5) 0%,
+        rgba(0,0,0,0.3) 40%,
+        rgba(0,0,0,0.7) 70%,
+        rgba(0,0,0,0.95) 100%);
+      z-index: 1;
+    }
 
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(76,175,80,0.2);
-        }
+    .hero-particles {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
 
-        .feature-icon {
-            font-size: 3rem;
-            color: #4CAF50;
-            margin-bottom: 1rem;
-        }
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 50%;
+      opacity: 0;
+      animation: floatUp 6s ease-in-out infinite;
+    }
 
-        /* Events Section */
-        .events {
-            background: linear-gradient(135deg, #E8F5E8, #F1F8E9);
-        }
+    @keyframes floatUp {
+      0% { opacity: 0; transform: translateY(100vh) scale(0); }
+      20% { opacity: 0.6; }
+      80% { opacity: 0.3; }
+      100% { opacity: 0; transform: translateY(-20vh) scale(1); }
+    }
 
-        .events-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      max-width: 900px;
+    }
 
-        .event-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px 6px 8px;
+      background: var(--accent-subtle);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s var(--transition-slow) forwards 0.3s;
+    }
 
-        .event-card:hover {
-            transform: translateY(-5px);
-        }
+    .hero-badge .badge-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
 
-        .event-image {
-            height: 200px;
-            background: linear-gradient(45deg, #4CAF50, #66BB6A);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
-        }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
 
-        .event-content {
-            padding: 1.5rem;
-        }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 10vw, 7.5rem);
+      font-weight: 500;
+      line-height: 0.85;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s var(--transition-slow) forwards 0.5s;
+    }
 
-        .event-date {
-            color: #4CAF50;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
+    .hero-title .accent { color: var(--accent); }
 
-        /* Join Section */
-        .join {
-            text-align: center;
-            background: linear-gradient(135deg, #4CAF50, #45a049);
-            color: white;
-        }
+    .hero-title .outline-text {
+      -webkit-text-stroke: 1.5px rgba(255,255,255,0.25);
+      color: transparent;
+    }
 
-        .join form {
-            max-width: 500px;
-            margin: 2rem auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
+    .hero-subtitle {
+      font-size: clamp(14px, 2vw, 18px);
+      font-weight: 300;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s var(--transition-slow) forwards 0.7s;
+    }
 
-        .join input, .join button {
-            padding: 1rem;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-        }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s var(--transition-slow) forwards 0.9s;
+    }
 
-        .join input {
-            background: rgba(255,255,255,0.9);
-        }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        .join button {
-            background: #FF9800;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-dim);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
 
-        .join button:hover {
-            background: #F57C00;
-        }
+    .hero-scroll .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+    }
 
-        /* Footer */
-        footer {
-            background: #2E7D32;
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-        }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
 
-        .social-links {
-            margin: 1rem 0;
-        }
+    /* ═══════════════════════════════════════
+       BUTTONS
+    ═══════════════════════════════════════ */
+    .btn-green {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      background: var(--accent);
+      color: #000;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
 
-        .social-links a {
-            color: white;
-            font-size: 1.5rem;
-            margin: 0 1rem;
-            transition: color 0.3s;
-        }
+    .btn-green::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform 0.5s;
+    }
 
-        .social-links a:hover {
-            color: #FF9800;
-        }
+    .btn-green:hover::before { transform: translateX(100%); }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .btn-green:hover {
+      background: var(--accent-light);
+      box-shadow: 0 0 30px var(--accent-glow);
+      transform: translateY(-2px);
+    }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      background: transparent;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: var(--transition);
+    }
 
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: #4CAF50;
-                flex-direction: column;
-                padding: 1rem;
-            }
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 20px var(--accent-glow);
+      transform: translateY(-2px);
+    }
 
-            .nav-links.active {
-                display: flex;
-            }
+    /* ═══════════════════════════════════════
+       SECTIONS
+    ═══════════════════════════════════════ */
+    section { padding: 100px 24px; position: relative; }
 
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
+    .section-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 64px;
+    }
 
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
 
-            .container {
-                padding: 0 1rem;
-            }
-        }
+    .section-label .line {
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
 
-        /* 1. Basic Link */
-a.basic {
-  color: #0066cc;
-  text-decoration: none;
-  font-weight: bold;
-}
-a.basic:hover {
-  color: red;
-  text-decoration: underline;
-}
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.75rem);
+      font-weight: 500;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
 
-/* 2. Button Link */
-a.button-link {
-  background-color: Navy;
-  color: white;
-  padding: 10px 18px;
-  border-radius: 6px;
-  text-decoration: none;
-  display: inline-block;
-}
-a.button-link:hover {
-  background-color: #218838;
-}
+    .section-desc {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
 
-/* 3. Animated Underline */
-a.animated-link {
-  position: relative;
-  color: #fff;
-  text-decoration: none;
-}
-a.animated-link::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -3px;
-  left: 0;
-  background-color: #77501b;
-  transition: width 0.7s ease;
-}
-a.animated-link:hover::after {
-  width: 100%;
-}
+    /* ═══════════════════════════════════════
+       ABOUT / MISSION
+    ═══════════════════════════════════════ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-/* 4. Icon Link */
-a.icon-link {
-  color: #0d6efd;
-  text-decoration: none;
-}
-a.icon-link::before {
-  content: "🔗 ";
-}
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
 
-/* 5. Gradient Text Link */
-a.gradient-link {
-  background: linear-gradient(to right, green, red);
-  -webkit-background-clip: text;
-  color: transparent;
-  text-decoration: none;
-  font-weight: bold;
-}
-a.gradient-link:hover {
-  text-decoration: underline;
-}
+    .about-image-wrap {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      aspect-ratio: 4/5;
+    }
 
-/* 6. Disabled Link */
-a.disabled {
-  color: gray;
-  pointer-events: none;
-  text-decoration: line-through;
-}
+    .about-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(30%) contrast(1.1);
+      transition: var(--transition-slow);
+    }
 
-/* 7. Border Link */
-a.border-link {
-  border: 2px solid #007bff;
-  padding: 6px 14px;
-  border-radius: 20px;
-  color: #007bff;
-  text-decoration: none;
-}
-a.border-link:hover {
-  background-color: #007bff;
-  color: white;
-}
+    .about-image-wrap:hover img {
+      filter: grayscale(0%) contrast(1.05);
+      transform: scale(1.04);
+    }
 
-/* 8. Soft Link (Child-Friendly) */
-a.soft-link {
-  color: #6a5acd;
-  font-size: 18px;
-  text-decoration: none;
-}
-a.soft-link:hover {
-  color: #ff69b4;
-}
+    .about-image-badge {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-/* Page Styling */
-body {
-  font-family: Arial, sans-serif;
-  padding: 30px;
-}
+    .about-image-badge .number {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--accent);
+      line-height: 1;
+    }
 
-li {
-  margin: 15px 0;
-}
+    .about-image-badge .label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+    }
 
-    </style>
+    .about-text h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .about-text p {
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 24px;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .about-features {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .about-feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .about-feature .check {
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
+      background: var(--accent-subtle);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    .about-feature span {
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    /* ═══════════════════════════════════════
+       STATS BAR
+    ═══════════════════════════════════════ */
+    .stats-bar {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 48px 24px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .stat-item { position: relative; }
+
+    .stat-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: -16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 40px;
+      background: var(--border);
+    }
+
+    @media (max-width: 768px) {
+      .stat-item::after { display: none; }
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+    }
+
+    /* ═══════════════════════════════════════
+       EVENTS
+    ═══════════════════════════════════════ */
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 900px) { .events-grid { grid-template-columns: 1fr; } }
+
+    .event-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .event-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 30px var(--accent-glow);
+    }
+
+    .event-card-image {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+
+    .event-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(30%);
+      transition: var(--transition-slow);
+    }
+
+    .event-card:hover .event-card-image img {
+      filter: grayscale(0%);
+      transform: scale(1.08);
+    }
+
+    .event-date-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: var(--accent);
+      color: #000;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .event-date-badge .day {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 600;
+      display: block;
+    }
+
+    .event-date-badge .month {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .event-card-body { padding: 24px; }
+
+    .event-card-body .tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .event-card-body h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    .event-card-body p {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .event-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .event-meta span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .event-meta iconify-icon { color: var(--accent); font-size: 14px; }
+
+    /* ═══════════════════════════════════════
+       INITIATIVES
+    ═══════════════════════════════════════ */
+    .initiatives-section { background: var(--bg-secondary); }
+
+    .initiatives-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 900px) { .initiatives-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 500px) { .initiatives-grid { grid-template-columns: 1fr; } }
+
+    .initiative-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px 24px;
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .initiative-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .initiative-card:hover::before { opacity: 1; }
+
+    .initiative-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+
+    .initiative-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--accent-subtle);
+      border: 1px solid rgba(34,197,94,0.15);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: var(--accent);
+      font-size: 24px;
+      transition: var(--transition);
+    }
+
+    .initiative-card:hover .initiative-icon {
+      background: var(--accent);
+      color: #000;
+      transform: scale(1.1);
+    }
+
+    .initiative-card h4 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 10px;
+    }
+
+    .initiative-card p {
+      font-size: 13px;
+      color: var(--text-dim);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════
+       GALLERY
+    ═══════════════════════════════════════ */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 280px);
+      gap: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 200px);
+      }
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .gallery-item:first-child {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    @media (max-width: 768px) {
+      .gallery-item:first-child {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(40%);
+      transition: var(--transition-slow);
+    }
+
+    .gallery-item:hover img {
+      filter: grayscale(0%);
+      transform: scale(1.08);
+    }
+
+    .gallery-item .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent 50%);
+      opacity: 0;
+      transition: var(--transition);
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+    }
+
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+    .gallery-overlay span {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    /* ═══════════════════════════════════════
+       TEAM
+    ═══════════════════════════════════════ */
+    .team-section { background: var(--bg-secondary); }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 900px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 500px) { .team-grid { grid-template-columns: 1fr; max-width: 320px; } }
+
+    .team-card {
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .team-card:hover { transform: translateY(-6px); }
+
+    .team-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 18px;
+      border: 2px solid var(--border);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .team-card:hover .team-avatar {
+      border-color: var(--accent);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .team-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(50%);
+      transition: var(--transition);
+    }
+
+    .team-card:hover .team-avatar img { filter: grayscale(0%); }
+
+    .team-card h4 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 4px;
+    }
+
+    .team-card .role {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+
+    .team-socials {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .team-socials a {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dim);
+      font-size: 14px;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .team-socials a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-subtle);
+    }
+
+    /* ═══════════════════════════════════════
+       TESTIMONIALS
+    ═══════════════════════════════════════ */
+    .testimonial-slider {
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial-track {
+      display: flex;
+      transition: transform 0.5s var(--transition);
+    }
+
+    .testimonial-slide {
+      min-width: 100%;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .testimonial-quote {
+      font-size: clamp(16px, 2.5vw, 22px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .testimonial-quote::before {
+      content: '"';
+      font-family: var(--font-display);
+      font-size: 80px;
+      color: var(--accent);
+      opacity: 0.3;
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      line-height: 1;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .testimonial-author img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      filter: grayscale(50%);
+    }
+
+    .testimonial-author-info .name {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .testimonial-author-info .title {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .testimonial-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 36px;
+    }
+
+    .testimonial-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .testimonial-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-subtle);
+    }
+
+    .testimonial-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .testimonial-dots .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .testimonial-dots .dot.active {
+      background: var(--accent);
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    /* ═══════════════════════════════════════
+       CTA / JOIN
+    ═══════════════════════════════════════ */
+    .cta-section {
+      background: var(--bg-secondary);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-content { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+
+    .cta-form {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width: 500px) {
+      .cta-form { flex-direction: column; }
+    }
+
+    .cta-form input {
+      flex: 1;
+      padding: 14px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 14px;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .cta-form input::placeholder { color: var(--text-dim); }
+    .cta-form input:focus { border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
+
+    .form-toast {
+      display: none;
+      margin-top: 16px;
+      padding: 12px 20px;
+      background: var(--accent-subtle);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: var(--radius-md);
+      color: var(--accent-light);
+      font-size: 13px;
+      font-weight: 500;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .form-toast.show { display: flex; }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    .site-footer {
+      background: var(--bg-primary);
+      border-top: 1px solid var(--border);
+      padding: 64px 24px 32px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      max-width: 1200px;
+      margin: 0 auto 48px;
+    }
+
+    @media (max-width: 768px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+    @media (max-width: 500px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    .footer-brand p {
+      color: var(--text-dim);
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.7;
+      margin-top: 14px;
+      max-width: 280px;
+    }
+
+    .footer-col h5 {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul { list-style: none; }
+
+    .footer-col ul li { margin-bottom: 10px; }
+
+    .footer-col ul a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 400;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-col ul a:hover { color: var(--accent); }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-bottom p {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 10px;
+    }
+
+    .footer-socials a {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dim);
+      font-size: 16px;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-socials a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-subtle);
+    }
+
+    /* ═══════════════════════════════════════
+       SCROLL REVEAL
+    ═══════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s var(--transition-slow), transform 0.7s var(--transition-slow);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ═══════════════════════════════════════
+       LIGHTBOX
+    ═══════════════════════════════════════ */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      cursor: pointer;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: var(--radius-md);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .lightbox-close:hover { background: var(--accent); color: #000; }
+
+    /* ═══════════════════════════════════════
+       BACK TO TOP
+    ═══════════════════════════════════════ */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 900;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: var(--transition);
+      box-shadow: 0 4px 20px var(--accent-glow);
+    }
+
+    .back-to-top.show { opacity: 1; transform: translateY(0); }
+    .back-to-top:hover { background: var(--accent-light); transform: translateY(-3px); }
+  </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <nav>
-            <div class="logo"><img src="GreenClub-Akp.png" width="60px" height="60px">
-                Green Club - Anakapalli 
-            </div>
-            <ul class="nav-links">
-                <li><a href="#home" class="animated-link">Home</a></li> 
-                <li><a href="#about" class="animated-link">About</a></li>
-                <li><a href="#events" class="animated-link">Events</a></li>
-                <li><a href="#join" class="animated-link">Join</a></li>
-            </ul>
-            <div class="hamburger" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </nav>
-    </header>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>Protect Our Planet</h1>
-            <p>Join us in creating a sustainable future for generations to come</p>
-            <a href="#join" class="cta-button">Join the Movement</a>
-        </div>
-    </section>
+  <!-- ════════════ NAVBAR ════════════ -->
+  <nav class="navbar-green" id="navbar">
+    <a href="#" class="nav-logo">
+      <span class="logo-icon">
+        <iconify-icon icon="lucide:leaf"></iconify-icon>
+      </span>
+      Green Club
+    </a>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2>About Us</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>Green Club Anakapalli is a club of environment lovers. It was established by Mr. K.Phani Bhushan Sridhar(Vriksha Mitra awardee and National level best teacher awardee) in 2015 with the support of his father late Dr. Ramalinga Swamy a well known agricultural scientist. Mr. Sridhar started his journey as a one man army but in a short time he got support from environment lovers and he was encouraged from retired forest ranger Sri B. Vinod Kumar  and Karri Sanyasi Naidu as a result now the club is flourishing with nearly 100 members. The main motto of the club is to make an eco-friendly environment. Another goal of the club is aware each and every person about the human relationship between plants and other living creatures like birds, the main slogan of the club is without trees, there is no life, there is no good for mankind. meaning of this is without plants there is no survival  of any creature on the earth, especially human beings. why because plants given oxygen for breathing and food for survival and shelter for safe living fr us.  </p>
-                </div>
-                <div class="about-image">
-                    <div style="font-size: 8rem; color: #4CAF50;">
-                        🌱
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="nav-links-desktop">
+      <a href="#about" class="nav-link-custom">About</a>
+      <a href="#events" class="nav-link-custom">Events</a>
+      <a href="#initiatives" class="nav-link-custom">Initiatives</a>
+      <a href="#gallery" class="nav-link-custom">Gallery</a>
+      <a href="#team" class="nav-link-custom">Team</a>
+      <a href="#join" class="nav-cta">Join Us</a>
+    </div>
 
-    <!-- Features Section -->
-    <section class="features">
-        <div class="container">
-            <h3>Objectives of Green Club</h3>
-
-            <p><i class="fas fa-leaf"></i> The main aim of establishing Green Club to conserve the natural resources and environment, to create eco-friendly.</p>
-            <p><i class="fas fa-leaf"></i> To motivate the students as well as everyone to keep surroundings green and clean.</p>
-            <p><i class="fas fa-leaf"></i> To promote the practice of reduce reuse, recycle.</p>
-            <p><i class="fas fa-leaf"></i> To celebrate environmental days like world environment day, forest day, world water day, one day etc. </p>
-            <p><i class="fas fa-leaf"></i> To organize programmes such as quiz, easy writing, competitions rallies etc regarding various environment issues.</p>
-
-            <br><br>
-
-            <h3>Our Leadership</h3>
-
-            <h4>Founder of Green Club</h4>
-
-              <p>&#10625; Konathala Phani Bhushan Sridhar</p>
-              <p>&#10625; B.Vinod Kumar</p>
-              <p>&#10625; P.Uma Maheswara Rao</p>
-              <p>&#10625; Y.Suri Appa Rao</p>
-
-              <br><br>
-
-
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-tree"></i>
-                    </div>
-                    <h3>Tree Planting</h3>
-                    <p>Planting thousands of trees to restore forests and combat climate change.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-recycle"></i>
-                    </div>
-                    <h3>Recycling Drives</h3>
-                    <p>Organizing community recycling events and waste reduction workshops.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-water"></i>
-                    </div>
-                    <h3>Beach Cleanups</h3>
-                    <p>Removing plastic waste from beaches and protecting marine life.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Events Section -->
-    <section id="events" class="events">
-        <div class="container">
-            <h2>Upcoming Events</h2>
-            <div class="events-grid">
-                <div class="event-card">
-                    <div class="event-image">
-                        <i class="fas fa-seedling"></i>
-                    </div>
-                    <div class="event-content">
-                        <div class="event-date">March 15, 2024</div>
-                        <h3>Community Tree Planting</h3>
-                        <p>Join us for our annual tree planting event at Central Park!</p>
-                    </div>
-                </div>
-                <div class="event-card">
-                    <div class="event-image">
-                        <i class="fas fa-recycle"></i>
-                    </div>
-                    <div class="event-content">
-                        <div class="event-date">March 22, 2024</div>
-                        <h3>Earth Day Cleanup</h3>
-                        <p>Celebrate Earth Day by cleaning up our local beaches and parks.</p>
-                    </div>
-                </div>
-                <div class="event-card">
-                    <div class="event-image">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="event-content">
-                        <div class="event-date">March 30, 2024</div>
-                        <h3>Sustainability Workshop</h3>
-                        <p>Learn practical tips for living a zero-waste lifestyle.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Join Section -->
-    <section id="join" class="join">
-        <div class="container">
-            <h2>Join Green Club Today!</h2>
-            <p>Be part of the solution. Together, we can make a difference.</p>
-            <form>
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Your Email" required>
-                <button type="submit">Join Now</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="social-links">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-            </div>
-            <p>&copy; 2026 Copyright Green Club All Rights Reserved India.</p>
-        </div>
-    </footer>
-
-    <script>
-        // Mobile menu toggle
-        function toggleMenu() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('active');
-        }
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-                // Close mobile menu if open
-                document.querySelector('.nav-links').classList.remove('active');
-            });
-        });
-
-        // Form submission
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for joining Green Club! We\'ll contact you soon.');
-            this.reset();
-        });
-
-        // Animate cards on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe feature cards
-        document.querySelectorAll('.feature-card, .event-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(card);
-        });
-    </script>
-</body>
-</html>
-
-<html>
-  <body>
-    <style>
-      #myBtn {
-    display: none; /* Hidden by default */
-    position: fixed; /* Fixed/sticky position */
-    bottom: 20px; /* Place the button at the bottom of the page */
-    right: 30px; /* Place the button 30px from the right */
-    z-index: 99; /* Make sure it does not overlap */
-    border: none; /* Remove borders */
-    outline: none; /* Remove outline */
-    background-color: green; /* Set a background color */
-    color: white; /* Text color */
-    cursor: pointer; /* Add a mouse pointer on hover */
-    padding: 15px; /* Some padding */
-    border-radius: 10px; /* Rounded corners */
-    font-size: 18px; /* Increase font size (a icon is a font) */
-}
-
-#myBtn:hover {
-    background-color: #555; /* Add a hover effect */
-}
-</style>
-
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-    <!-- other head elements -->
-</head>
-<body>
-    <!-- ... page content ... -->
-    <button onclick="topFunction()" id="myBtn" title="Go to top">
-        <i class="fa fa-chevron-up"></i>
+    <button class="mobile-toggle" id="mobileToggle">
+      <iconify-icon icon="lucide:menu"></iconify-icon>
     </button>
-    <!-- ... rest of body ... -->
+  </nav>
 
-<script>
-  // Get the button
-let mybutton = document.getElementById("myBtn");
+  <!-- ════════════ HERO ════════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <img src="https://picsum.photos/seed/greenforest/1920/1080.jpg" alt="Green Forest" />
+    </div>
+    <div class="hero-overlay"></div>
 
-// When the user scrolls down 20px from the top of the document, show the button
-window.onscroll = function() {scrollFunction()};
+    <div class="hero-particles" id="particles"></div>
 
-function scrollFunction() {
-  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    mybutton.style.display = "block";
-  } else {
-    mybutton.style.display = "none";
-  }
-}
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Now Recruiting Members
+      </div>
+      <h1 class="hero-title">
+        Protect<br />
+        <span class="accent">Our</span> <span class="outline-text">Planet</span>
+      </h1>
+      <p class="hero-subtitle">
+        Join a community of changemakers dedicated to sustainability, conservation, and building a greener future for generations to come.
+      </p>
+      <div class="hero-actions">
+        <a href="#join" class="btn-green">
+          <iconify-icon icon="lucide:users"></iconify-icon>
+          Become a Member
+        </a>
+        <a href="#about" class="btn-outline">
+          <iconify-icon icon="lucide:play-circle"></iconify-icon>
+          Learn More
+        </a>
+      </div>
+    </div>
 
-// When the user clicks on the button, scroll to the top of the document
-function topFunction() {
-  // Smooth scroll behavior can be achieved with CSS or JavaScript
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth' // This provides a smooth scrolling effect
-  });
-}
-</script>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ════════════ ABOUT ════════════ -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-image-wrap reveal">
+        <img src="https://picsum.photos/seed/planting-trees/800/1000.jpg" alt="Planting Trees" />
+        <div class="about-image-badge">
+          <div class="number">5+</div>
+          <div class="label">Years of<br/>Impact</div>
+        </div>
+      </div>
+      <div class="about-text reveal reveal-delay-2">
+        <div class="section-label">
+          <span class="line"></span>
+          Our Mission
+          <span class="line"></span>
+        </div>
+        <h3>Cultivating a <span style="color:var(--accent)">Sustainable</span> Future</h3>
+        <p>
+          Green Club was founded with a simple belief: every individual action contributes to global change. We organize impactful environmental initiatives, educate our community, and take concrete steps toward a cleaner, greener world.
+        </p>
+        <p>
+          From campus cleanups to policy advocacy, we channel passion into measurable outcomes that benefit both people and the planet.
+        </p>
+        <div class="about-features">
+          <div class="about-feature">
+            <span class="check"><iconify-icon icon="lucide:check"></iconify-icon></span>
+            <span>500+ trees planted across local communities</span>
+          </div>
+          <div class="about-feature">
+            <span class="check"><iconify-icon icon="lucide:check"></iconify-icon></span>
+            <span>200+ active members driving real change</span>
+          </div>
+          <div class="about-feature">
+            <span class="check"><iconify-icon icon="lucide:check"></iconify-icon></span>
+            <span>30+ environmental awareness events per year</span>
+          </div>
+          <div class="about-feature">
+            <span class="check"><iconify-icon icon="lucide:check"></iconify-icon></span>
+            <span>Partnerships with 10+ eco organizations</span>
+          </div>
+        </div>
+        <a href="#initiatives" class="btn-green">
+          <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+          View Initiatives
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ STATS BAR ════════════ -->
+  <div class="stats-bar">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <div class="stat-number" data-target="500">0</div>
+        <div class="stat-label">Trees Planted</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-1">
+        <div class="stat-number" data-target="200">0</div>
+        <div class="stat-label">Active Members</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-2">
+        <div class="stat-number" data-target="30">0</div>
+        <div class="stat-label">Events Yearly</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-3">
+        <div class="stat-number" data-target="10">0</div>
+        <div class="stat-label">Partner Orgs</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════ EVENTS ════════════ -->
+  <section id="events">
+    <div class="section-header reveal">
+      <div class="section-label">
+        <span class="line"></span>
+        Upcoming Events
+        <span class="line"></span>
+      </div>
+      <h2 class="section-title">What's <span style="color:var(--accent)">Happening</span></h2>
+      <p class="section-desc">Join our upcoming events and be part of the environmental movement in your community.</p>
+    </div>
+
+    <div class="events-grid">
+      <div class="event-card reveal">
+        <div class="event-card-image">
+          <img src="https://picsum.photos/seed/beach-cleanup/600/400.jpg" alt="Beach Cleanup" />
+          <div class="event-date-badge">
+            <span class="day">15</span>
+            <span class="month">Mar</span>
+          </div>
+        </div>
+        <div class="event-card-body">
+          <span class="tag">Conservation</span>
+          <h3>Coastal Cleanup Drive</h3>
+          <p>Help us remove plastic waste and debris from our local shoreline. Gloves and bags provided.</p>
+          <div class="event-meta">
+            <span><iconify-icon icon="lucide:map-pin"></iconify-icon> Sunset Beach</span>
+            <span><iconify-icon icon="lucide:clock"></iconify-icon> 8:00 AM</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="event-card reveal reveal-delay-1">
+        <div class="event-card-image">
+          <img src="https://picsum.photos/seed/tree-planting-event/600/400.jpg" alt="Tree Planting" />
+          <div class="event-date-badge">
+            <span class="day">22</span>
+            <span class="month">Mar</span>
+          </div>
+        </div>
+        <div class="event-card-body">
+          <span class="tag">Plantation</span>
+          <h3>Million Trees March</h3>
+          <p>Plant native saplings in the urban green corridor. Each member plants at least 5 trees.</p>
+          <div class="event-meta">
+            <span><iconify-icon icon="lucide:map-pin"></iconify-icon> City Park</span>
+            <span><iconify-icon icon="lucide:clock"></iconify-icon> 7:00 AM</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="event-card reveal reveal-delay-2">
+        <div class="event-card-image">
+          <img src="https://picsum.photos/seed/recycling-workshop/600/400.jpg" alt="Workshop" />
+          <div class="event-date-badge">
+            <span class="day">05</span>
+            <span class="month">Apr</span>
+          </div>
+        </div>
+        <div class="event-card-body">
+          <span class="tag">Education</span>
+          <h3>Upcycling Workshop</h3>
+          <p>Learn to transform waste materials into useful products. Bring your creativity and old items!</p>
+          <div class="event-meta">
+            <span><iconify-icon icon="lucide:map-pin"></iconify-icon> Campus Hall B</span>
+            <span><iconify-icon icon="lucide:clock"></iconify-icon> 2:00 PM</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ INITIATIVES ════════════ -->
+  <section id="initiatives" class="initiatives-section">
+    <div class="section-header reveal">
+      <div class="section-label">
+        <span class="line"></span>
+        Our Initiatives
+        <span class="line"></span>
+      </div>
+      <h2 class="section-title">Driving <span style="color:var(--accent)">Change</span></h2>
+      <p class="section-desc">Focused programs designed to create lasting environmental impact across multiple fronts.</p>
+    </div>
+
+    <div class="initiatives-grid">
+      <div class="initiative-card reveal">
+        <div class="initiative-icon">
+          <iconify-icon icon="lucide:trees"></iconify-icon>
+        </div>
+        <h4>Reforestation</h4>
+        <p>Planting native species to restore degraded ecosystems and combat deforestation.</p>
+      </div>
+
+      <div class="initiative-card reveal reveal-delay-1">
+        <div class="initiative-icon">
+          <iconify-icon icon="lucide:recycle"></iconify-icon>
+        </div>
+        <h4>Zero Waste</h4>
+        <p>Promoting waste reduction, composting, and circular economy practices on campus.</p>
+      </div>
+
+      <div class="initiative-card reveal reveal-delay-2">
+        <div class="initiative-icon">
+          <iconify-icon icon="lucide:droplets"></iconify-icon>
+        </div>
+        <h4>Clean Water</h4>
+        <p>Protecting local water bodies through testing, cleanup, and awareness campaigns.</p>
+      </div>
+
+      <div class="initiative-card reveal reveal-delay-3">
+        <div class="initiative-icon">
+          <iconify-icon icon="lucide:sun"></iconify-icon>
+        </div>
+        <h4>Solar Energy</h4>
+        <p>Advocating for renewable energy adoption and installing solar panels on campus.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ GALLERY ════════════ -->
+  <section id="gallery">
+    <div class="section-header reveal">
+      <div class="section-label">
+        <span class="line"></span>
+        Gallery
+        <span class="line"></span>
+      </div>
+      <h2 class="section-title">Our <span style="color:var(--accent)">Moments</span></h2>
+      <p class="section-desc">A visual journey through our events, campaigns, and community impact.</p>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-item reveal" data-caption="Community Tree Planting Day">
+        <img src="https://picsum.photos/seed/green-club-main/800/600.jpg" alt="Tree Planting" />
+        <div class="gallery-overlay"><span>Community Tree Planting Day</span></div>
+      </div>
+      <div class="gallery-item reveal reveal-delay-1" data-caption="Beach Cleanup Volunteers">
+        <img src="https://picsum.photos/seed/beach-volunteers/400/300.jpg" alt="Beach Cleanup" />
+        <div class="gallery-overlay"><span>Beach Cleanup Volunteers</span></div>
+      </div>
+      <div class="gallery-item reveal reveal-delay-2" data-caption="Solar Panel Installation">
+        <img src="https://picsum.photos/seed/solar-panel-install/400/300.jpg" alt="Solar Panel" />
+        <div class="gallery-overlay"><span>Solar Panel Installation</span></div>
+      </div>
+      <div class="gallery-item reveal reveal-delay-3" data-caption="Upcycling Workshop">
+        <img src="https://picsum.photos/seed/upcycle-workshop/400/300.jpg" alt="Workshop" />
+        <div class="gallery-overlay"><span>Upcycling Workshop</span></div>
+      </div>
+      <div class="gallery-item reveal reveal-delay-1" data-caption="Nature Walk & Bird Watching">
+        <img src="https://picsum.photos/seed/nature-birdwalk/400/300.jpg" alt="Nature Walk" />
+        <div class="gallery-overlay"><span>Nature Walk & Bird Watching</span></div>
+      </div>
+      <div class="gallery-item reveal reveal-delay-2" data-caption="Environmental Rally">
+        <img src="https://picsum.photos/seed/eco-rally/400/300.jpg" alt="Eco Rally" />
+        <div class="gallery-overlay"><span>Environmental Rally</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ TEAM ════════════ -->
+  <section id="team" class="team-section">
+    <div class="section-header reveal">
+      <div class="section-label">
+        <span class="line"></span>
+        Leadership
+        <span class="line"></span>
+      </div>
+      <h2 class="section-title">Meet Our <span style="color:var(--accent)">Team</span></h2>
+      <p class="section-desc">Passionate individuals leading the charge toward sustainability.</p>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar">
+          <img src="https://picsum.photos/seed/person-emma/240/240.jpg" alt="Emma Chen" />
+        </div>
+        <h4>Emma Chen</h4>
+        <div class="role">President</div>
+        <div class="team-socials">
+          <a href="#"><iconify-icon icon="lucide:instagram"></iconify-icon></a>
+          <a href="#"><iconify-icon icon="lucide:linkedin"></iconify-icon></a>
+          <a href="#"><iconify-icon icon="lucide:mail"></iconify-icon></a>
+        </div>
+      </div>
+
+      <div class="team-card reveal reveal-delay-1">
+        <div class="team-avatar">
+          <img src="https://picsum.photos/seed/person-marcus/240/240.jpg" alt="Marcus Rivera" />
+        </div>
+        <h4>Marcus Rivera</h4>
+        <div class="role">Vice President</div>
+        <div class="team-socials">
+          <a href="#"><iconify-icon icon="lucide:instagram"></iconify-icon></a>
+          <a href="#"><iconify-icon icon="lucide:linkedin"></iconify-icon></a>
+          <a href="#"><iconify-icon icon="lucide:mail"></iconify-icon></a>
+        </div>
+      </div>
+
+      <div class="team-card reveal reveal-delay-2">
+        <div class="team-avatar">
+          <img src="https://picsum.photos/seed/person-aisha/240/240.jpg" alt="Aisha Patel" />
+        </div>
+        <h4>Aisha Patel</h4>
+        <div class="role">Events Director</div>
+        <div class="team-socials">
+          <a href="#"><iconify-icon icon="lucide:instagram"></iconify-icon></a>
+          <a href="#"><iconify-icon icon="lucide:linkedin"></iconify-icon></a>
+          <a href="#"><iconify-icon icon="lucide:mail"></iconify-icon></a>
+        </div>
+      </div>
+
+      <div class="team-card reveal reveal-delay-3">
+        <div class="team-avatar">
+          <img src="https://picsum.photos/seed/person-james/240/240.jpg" alt="James Okoro" />
+        </div>
+        <h4>James Okoro</h4>
+        <div class="role">Outreach Lead</div>
+        <div class="team-socials">
+          <a href="#"><iconify-icon icon="lucide:instagram"></iconify-icon></a>
+          <a href="#"><iconify-icon icon="lucide:linkedin"></iconify-icon></a>
+          <a href="#"><iconify-icon icon="lucide:mail"></iconify-icon></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ TESTIMONIALS ════════════ -->
+  <section id="testimonials">
+    <div class="section-header reveal">
+      <div class="section-label">
+        <span class="line"></span>
+        Testimonials
+        <span class="line"></span>
+      </div>
+      <h2 class="section-title">What Members <span style="color:var(--accent)">Say</span></h2>
+    </div>
+
+    <div class="testimonial-slider reveal">
+      <div class="testimonial-track" id="testimonialTrack">
+        <div class="testimonial-slide">
+          <div class="testimonial-quote">Joining Green Club was the best decision of my college life. I've learned so much about sustainability and made friends who share my passion for the environment.</div>
+          <div class="testimonial-author">
+            <img src="https://picsum.photos/seed/test-sarah/88/88.jpg" alt="Sarah" />
+            <div class="testimonial-author-info">
+              <div class="name">Sarah Kim</div>
+              <div class="title">Member since 2022</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-slide">
+          <div class="testimonial-quote">The hands-on experience from beach cleanups to tree planting has been incredible. Green Club turns awareness into real, tangible action.</div>
+          <div class="testimonial-author">
+            <img src="https://picsum.photos/seed/test-david/88/88.jpg" alt="David" />
+            <div class="testimonial-author-info">
+              <div class="name">David Thompson</div>
+              <div class="title">Volunteer Coordinator</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-slide">
+          <div class="testimonial-quote">As a faculty advisor, I'm amazed by the dedication of these students. They've inspired our entire institution to adopt greener practices.</div>
+          <div class="testimonial-author">
+            <img src="https://picsum.photos/seed/test-dr-lin/88/88.jpg" alt="Dr. Lin" />
+            <div class="testimonial-author-info">
+              <div class="name">Dr. Maria Lin</div>
+              <div class="title">Faculty Advisor</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-controls">
+        <button class="testimonial-btn" id="prevTestimonial">
+          <iconify-icon icon="lucide:chevron-left"></iconify-icon>
+        </button>
+        <div class="testimonial-dots" id="testimonialDots">
+          <span class="dot active" data-index="0"></span>
+          <span class="dot" data-index="1"></span>
+          <span class="dot" data-index="2"></span>
+        </div>
+        <button class="testimonial-btn" id="nextTestimonial">
+          <iconify-icon icon="lucide:chevron-right"></iconify-icon>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ CTA / JOIN ════════════ -->
+  <section id="join" class="cta-section">
+    <div class="cta-content reveal">
+      <div class="section-label" style="justify-content:center;">
+        <span class="line"></span>
+        Get Involved
+        <span class="line"></span>
+      </div>
+      <h2 class="section-title">Ready to Make a <span style="color:var(--accent)">Difference</span>?</h2>
+      <p class="section-desc">Subscribe to our newsletter and stay updated on events, volunteer opportunities, and environmental news.</p>
+
+      <form class="cta-form" id="ctaForm">
+        <input type="email" id="ctaEmail" placeholder="Enter your email address" required />
+        <button type="submit" class="btn-green" style="white-space:nowrap;">
+          <iconify-icon icon="lucide:send"></iconify-icon>
+          Subscribe
+        </button>
+      </form>
+
+      <div class="form-toast" id="formToast">
+        <iconify-icon icon="lucide:check-circle" style="font-size:18px;"></iconify-icon>
+        Welcome aboard! Check your inbox for confirmation.
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ FOOTER ════════════ -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" style="padding:0;">
+          <span class="logo-icon">
+            <iconify-icon icon="lucide:leaf"></iconify-icon>
+          </span>
+          Green Club
+        </a>
+        <p>Building a sustainable future through community action, education, and environmental advocacy since 2019.</p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Quick Links</h5>
+        <ul>
+          <li><a href="#about"><iconify-icon icon="lucide:chevron-right" style="font-size:12px;color:var(--accent)"></iconify-icon> About Us</a></li>
+          <li><a href="#events"><iconify-icon icon="lucide:chevron-right" style="font-size:12px;color:var(--accent)"></iconify-icon> Events</a></li>
+          <li><a href="#initiatives"><iconify-icon icon="lucide:chevron-right" style="font-size:12px;color:var(--accent)"></iconify-icon> Initiatives</a></li>
+          <li><a href="#gallery"><iconify-icon icon="lucide:chevron-right" style="font-size:12px;color:var(--accent)"></iconify-icon> Gallery</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="#"><iconify-icon icon="lucide:chevron-right" style="font-size:12px;color:var(--accent)"></iconify-icon> Blog</a></li>
+          <li><a href="#"><iconify-icon icon="lucide:chevron-right" style="font-size:12px;color:var(--accent)"></iconify-icon> Annual Report</a></li>
+          <li><a href="#"><iconify-icon icon="lucide:chevron-right" style="font-size:12px;color:var(--accent)"></iconify-icon> Partner With Us</a></li>
+          <li><a href="#"><iconify-icon icon="lucide:chevron-right" style="font-size:12px;color:var(--accent)"></iconify-icon> Donate</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="#"><iconify-icon icon="lucide:mail" style="font-size:14px;color:var(--accent)"></iconify-icon> hello@greenclub.org</a></li>
+          <li><a href="#"><iconify-icon icon="lucide:phone" style="font-size:14px;color:var(--accent)"></iconify-icon> +1 (555) 234-5678</a></li>
+          <li><a href="#"><iconify-icon icon="lucide:map-pin" style="font-size:14px;color:var(--accent)"></iconify-icon> Campus Center, Room 204</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Green Club. All rights reserved. Built with 🌱 for the planet.</p>
+      <div class="footer-socials">
+        <a href="#"><iconify-icon icon="lucide:instagram"></iconify-icon></a>
+        <a href="#"><iconify-icon icon="lucide:twitter"></iconify-icon></a>
+        <a href="#"><iconify-icon icon="lucide:facebook"></iconify-icon></a>
+        <a href="#"><iconify-icon icon="lucide:youtube"></iconify-icon></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════════ LIGHTBOX ════════════ -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">
+      <iconify-icon icon="lucide:x"></iconify-icon>
+    </button>
+    <img src="" alt="Gallery Image" id="lightboxImg" />
+  </div>
+
+  <!-- ════════════ BACK TO TOP ════════════ -->
+  <button class="back-to-top" id="backToTop">
+    <iconify-icon icon="lucide:chevron-up"></iconify-icon>
+  </button>
+
+  <!-- ════════════ SCRIPTS ════════════ -->
+  <script>
+    $(function () {
+
+      // ── Particles ──
+      const $particles = $('#particles');
+      for (let i = 0; i < 25; i++) {
+        const size = Math.random() * 3 + 1;
+        const left = Math.random() * 100;
+        const delay = Math.random() * 6;
+        const duration = Math.random() * 4 + 4;
+        $particles.append(
+          $('<div class="particle"></div>').css({
+            width: size + 'px',
+            height: size + 'px',
+            left: left + '%',
+            animationDelay: delay + 's',
+            animationDuration: duration + 's'
+          })
+        );
+      }
+
+      // ── Navbar scroll effect ──
+      $(window).on('scroll', function () {
+        if ($(this).scrollTop() > 100) {
+          $('#navbar').addClass('scrolled');
+        } else {
+          $('#navbar').removeClass('scrolled');
+        }
+
+        // Back to top
+        if ($(this).scrollTop() > 600) {
+          $('#backToTop').addClass('show');
+        } else {
+          $('#backToTop').removeClass('show');
+        }
+      });
+
+      // ── Mobile toggle ──
+      $('#mobileToggle').on('click', function () {
+        $('#navbar').toggleClass('open');
+        const icon = $(this).find('iconify-icon');
+        if ($('#navbar').hasClass('open')) {
+          icon.attr('icon', 'lucide:x');
+        } else {
+          icon.attr('icon', 'lucide:menu');
+        }
+      });
+
+      // Close mobile nav on link click
+      $('.nav-link-custom, .nav-cta').on('click', function () {
+        $('#navbar').removeClass('open');
+        $('#mobileToggle iconify-icon').attr('icon', 'lucide:menu');
+      });
+
+      // ── Smooth scroll ──
+      $('a[href^="#"]').on('click', function (e) {
+        e.preventDefault();
+        const target = $($(this).attr('href'));
+        if (target.length) {
+          $('html, body').animate({ scrollTop: target.offset().top - 80 }, 800);
+        }
+      });
+
+      // ── Scroll reveal ──
+      const revealElements = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+      revealElements.forEach(el => observer.observe(el));
+
+      // ── Counter animation ──
+      let countersAnimated = false;
+      const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !countersAnimated) {
+            countersAnimated = true;
+            $('.stat-number').each(function () {
+              const $this = $(this);
+              const target = parseInt($this.data('target'));
+              $({ count: 0 }).animate({ count: target }, {
+                duration: 2000,
+                easing: 'swing',
+                step: function () {
+                  $this.text(Math.floor(this.count) + '+');
+                },
+                complete: function () {
+                  $this.text(target + '+');
+                }
+              });
+            });
+          }
+        });
+      }, { threshold: 0.5 });
+
+      counterObserver.observe(document.querySelector('.stats-bar'));
+
+      // ── Testimonial slider ──
+      let currentSlide = 0;
+      const totalSlides = 3;
+      const $track = $('#testimonialTrack');
+      const $dots = $('#testimonialDots .dot');
+
+      function goToSlide(index) {
+        currentSlide = index;
+        $track.css('transform', `translateX(-${currentSlide * 100}%)`);
+        $dots.removeClass('active');
+        $dots.eq(currentSlide).addClass('active');
+      }
+
+      $('#nextTestimonial').on('click', function () {
+        goToSlide((currentSlide + 1) % totalSlides);
+      });
+
+      $('#prevTestimonial').on('click', function () {
+        goToSlide((currentSlide - 1 + totalSlides) % totalSlides);
+      });
+
+      $dots.on('click', function () {
+        goToSlide($(this).data('index'));
+      });
+
+      // Auto-advance
+      let autoSlide = setInterval(function () {
+        goToSlide((currentSlide + 1) % totalSlides);
+      }, 5000);
+
+      $('.testimonial-btn, .testimonial-dots .dot').on('click', function () {
+        clearInterval(autoSlide);
+        autoSlide = setInterval(function () {
+          goToSlide((currentSlide + 1) % totalSlides);
+        }, 5000);
+      });
+
+      // ── Gallery lightbox ──
+      $('.gallery-item').on('click', function () {
+        const src = $(this).find('img').attr('src');
+        // Get larger version by changing the dimensions
+        const largeSrc = src.replace(/\/\d+\/\d+\.jpg/, '/1200/800.jpg');
+        $('#lightboxImg').attr('src', largeSrc);
+        $('#lightbox').addClass('open');
+        $('body').css('overflow', 'hidden');
+      });
+
+      $('#lightboxClose, #lightbox').on('click', function (e) {
+        if (e.target === this || $(this).is('#lightboxClose')) {
+          $('#lightbox').removeClass('open');
+          $('body').css('overflow', '');
+        }
+      });
+
+      // Close lightbox with Escape
+      $(document).on('keydown', function (e) {
+        if (e.key === 'Escape') {
+          $('#lightbox').removeClass('open');
+          $('body').css('overflow', '');
+        }
+      });
+
+      // ── CTA Form ──
+      $('#ctaForm').on('submit', function (e) {
+        e.preventDefault();
+        const email = $('#ctaEmail').val();
+        if (email) {
+          $('#formToast').addClass('show');
+          $('#ctaEmail').val('');
+          setTimeout(function () {
+            $('#formToast').removeClass('show');
+          }, 4000);
+        }
+      });
+
+      // ── Back to top ──
+      $('#backToTop').on('click', function () {
+        $('html, body').animate({ scrollTop: 0 }, 800);
+      });
+
+      // ── Active nav link on scroll ──
+      const sections = ['about', 'events', 'initiatives', 'gallery', 'team', 'join'];
+      $(window).on('scroll', function () {
+        const scrollPos = $(this).scrollTop() + 200;
+        sections.forEach(id => {
+          const section = document.getElementById(id);
+          if (section) {
+            const top = $(section).offset().top;
+            const bottom = top + $(section).outerHeight();
+            if (scrollPos >= top && scrollPos < bottom) {
+              $('.nav-link-custom').removeClass('active');
+              $(`.nav-link-custom[href="#${id}"]`).addClass('active');
+            }
+          }
+        });
+      });
+
+    });
+  </script>
+
 </body>
 </html>
