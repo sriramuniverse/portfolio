@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Club Anakapalli</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- 1. CSS VARIABLES & RESET --- */
+        :root {
+            /* Core Brand Colors */
+            --primary-color: #187707; /* Forest Green */
+            --primary-dark: #112b23; /* Darker Green for Footer */
+            --primary-light: #4CAF50; /* Lighter Green for accents */
+            
+            /* Text Colors */
+            --text-main: #1f2937;
+            --text-light: #6b7280;
+            --text-white: #ffffff;
+
+            /* Backgrounds */
+            --bg-body: #f3f4f6;
+            --bg-nav: rgba(255, 255, 255, 0.95);
+            --bg-white: #ffffff;
+            --bg-cream: #fdfbf7; /* Soft background for form section */
+
+            /* Dimensions & Spacing */
+            --nav-height: 70px;
+            --container-width: 1200px;
+            --section-padding: 100px 0;
+            
+            /* Effects */
+            --shadow-nav: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-top: var(--nav-height); /* Prevent content hiding behind fixed nav */
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        /* --- 2. HEADER & NAVBAR --- */
+        .site-header {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            height: var(--nav-height);
+            background-color: var(--bg-nav);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-nav);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo span { color: var(--text-main); }
+
+        /* Desktop Nav */
+        .desktop-nav { display: none; } /* Hidden on mobile by default */
+        .nav-menu { display: flex; align-items: center; gap: 30px; }
+        
+        .nav-link {
+            font-weight: 500; font-size: 1rem;
+            color: var(--text-main);
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-link:hover { color: var(--primary-color); }
+        
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: -4px; left: 0; background-color: var(--primary-color);
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* Mobile Toggle */
+        .mobile-toggle {
+            display: flex; flex-direction: column; justify-content: space-between;
+            width: 30px; height: 21px; cursor: pointer; z-index: 1100;
+        }
+        .bar { width: 100%; height: 3px; background-color: var(--text-main); border-radius: 3px; transition: 0.3s; }
+        
+        /* Mobile Menu Animation */
+        .mobile-toggle.active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .mobile-toggle.active .bar:nth-child(2) { opacity: 0; }
+        .mobile-toggle.active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+        .mobile-nav-overlay {
+            position: fixed; top: var(--nav-height); left: 0; width: 100%;
+            height: calc(100vh - var(--nav-height));
+            background-color: white;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 999;
+            display: flex; flex-direction: column; align-items: center; padding-top: 40px;
+        }
+        .mobile-nav-overlay.active { transform: translateX(0); }
+        .mobile-nav-link { font-size: 1.25rem; color: var(--text-main); margin-bottom: 24px; font-weight: 500; }
+
+        @media (min-width: 768px) {
+            .mobile-toggle { display: none; }
+            .desktop-nav { display: block; }
+        }
+
+        /* --- 3. HERO SECTION --- */
+        .hero {
+            position: relative;
+            height: 90vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-white);
+            /* Gradient overlay + Local Image */
+            background: linear-gradient(rgba(17, 43, 35, 0.6), rgba(17, 43, 35, 0.4)), 
+                        url('GreenClubAKP Images.jpeg') no-repeat center center/cover;
+        }
+
+        .hero-content {
+            max-width: 800px; padding: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem; font-weight: 800; margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3); line-height: 1.2;
+        }
+
+        .hero p { font-size: 1.25rem; margin-bottom: 30px; opacity: 0.9; }
+
+        .btn {
+            display: inline-block; padding: 12px 30px; border-radius: 50px;
+            font-weight: 600; cursor: pointer; transition: var(--transition);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color); color: white;
+            border: 2px solid var(--primary-color);
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-dark); border-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background: transparent; border: 2px solid white; color: white; margin-left: 10px;
+        }
+        .btn-outline:hover { background-color: white; color: var(--primary-color); }
+
+        /* --- 4. ABOUT SECTION --- */
+        .about { padding: var(--section-padding); background-color: var(--bg-white); }
+        .about-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+        }
+        .about-img {
+            border-radius: var(--border-radius); overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .about-img img { width: 100%; height: auto; transition: transform 0.5s ease; }
+        .about-img:hover img { transform: scale(1.05); }
+
+        .about-text h3 {
+            color: var(--primary-color); text-transform: uppercase; letter-spacing: 1px;
+            font-size: 0.9rem; font-weight: 700; margin-bottom: 10px;
+        }
+        .about-text h2 { font-size: 2.5rem; margin-bottom: 20px; line-height: 1.2; }
+        .about-text p { color: var(--text-light); font-size: 1.05rem; margin-bottom: 20px; }
+
+/* --- Activities Section Styles --- */
+/* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        /* Section Styles */
+        .activities {
+            padding: 80px 20px;
+            background-color: #f4f9f4;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #2e7d32;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: #4caf50;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Card Grid Layout */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        /* Card Styles */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(46, 125, 50, 0.15);
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            background-color: #e8f5e9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            transition: all 0.3s ease;
+        }
+
+        .card-icon svg {
+            width: 35px;
+            height: 35px;
+            fill: #2e7d32;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            background-color: #2e7d32;
+            transform: scale(1.1);
+        }
+
+        .card:hover .card-icon svg {
+            fill: white;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            color: #2e7d32;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* Decorative Elements */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            transform-origin: left;
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Additional Green Theme Accents */
+        .activities::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,100 Q50,50 100,100 L100,0 L0,0 Z" fill="%23f4f9f4" opacity="0.3"/></svg>');
+            background-size: cover;
+            z-index: -1;
+        }
+        
+        /* --- 6. EVENTS SECTION --- */
+        /* Events Section */
+.events {
+  padding: 60px 20px;
+  background: #ffffff;
+}
+
+/* Reuse container & header styles if already defined */
+
+/* Grid Layout */
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+/* Event Card */
+.event-card {
+  background: #f9fbf9;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+}
+
+/* Icon/Image Area */
+.event-image {
+  height: 120px;
+  background: linear-gradient(135deg, #66bb6a, #2e7d32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.event-image i {
+  font-size: 40px;
+  color: #fff;
+}
+
+/* Content */
+.event-content {
+  padding: 20px;
+}
+
+.event-date {
+  font-size: 0.85rem;
+  color: #2e7d32;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.event-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.event-card p {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Hover subtle glow */
+.event-card:hover .event-image {
+  background: linear-gradient(135deg, #81c784, #388e3c);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .event-image {
+    height: 100px;
+  }
+  
+  .event-image i {
+    font-size: 32px;
+  }
+}
+        /* --- 7. GALLERY SECTION --- */
+       .gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.gallery-item {
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.1);
+}
+
+.gallery-item {
+  height: 250px;
+  border-radius: 10px;
+  background-size: cover;
+  background-position: center;
+}
+
+
+        /* --- 8. JOIN / CONTACT SECTION --- */
+        .join { padding: var(--section-padding); background-color: var(--bg-cream); }
+        .form-container {
+            max-width: 600px; margin: 0 auto; background: white; padding: 40px;
+            border-radius: var(--border-radius); box-shadow: var(--shadow);
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-main); }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 6px;
+            font-family: inherit; font-size: 1rem; transition: var(--transition);
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--primary-color); outline: none;
+            box-shadow: 0 0 0 3px rgba(24, 119, 7, 0.2);
+        }
+
+        /* --- 9. FOOTER --- */
+        footer { background-color: var(--primary-dark); color: #ccc; padding: 60px 20px 20px; }
+        .footer-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px; max-width: var(--container-width); margin: 0 auto 40px;
+        }
+        .footer-col h4 { color: white; margin-bottom: 20px; font-size: 1.2rem; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a:hover { color: var(--primary-light); }
+        .footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; font-size: 0.9rem; }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- RESPONSIVE ADJUSTMENTS --- */
+        @media (max-width: 900px) {
+            .about-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navbar -->
+    <header class="site-header">
+        <div class="container">
+            <a href="#home" class="logo">
+                <!-- Added rounded style to logo image -->
+                <img src="GreenClub-Akp.png" alt="Logo" style="border-radius: 50%; width: 50px; height: 50px; object-fit: cover;">
+                <span>Green Club Anakapalli</span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="desktop-nav">
+                <ul class="nav-menu">
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#about" class="nav-link">About Us</a></li>
+                    <li><a href="#activities" class="nav-link">Activities</a></li>
+                    <li><a href="#events" class="nav-link">Events</a></li>
+                    <li><a href="#join" class="nav-link">Contact Us</a></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Toggle Button -->
+            <div class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNav">
+        <a href="#home" class="mobile-nav-link">Home</a>
+        <a href="#about" class="mobile-nav-link">About Us</a>
+        <a href="#activities" class="mobile-nav-link">Activities</a>
+        <a href="#events" class="mobile-nav-link">Events</a>
+        <a href="#join" class="mobile-nav-link">Contact Us</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Cultivating a Greener Future Together</h1>
+            <p>Join our community of eco-enthusiasts dedicated to protecting nature, promoting sustainability, and making our planet a better place.</p>
+            <div style="margin-top: 30px;">
+                <a href="#join" class="btn btn-primary">Become a Member</a>
+                <a href="#about" class="btn btn-outline">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container about-grid">
+            <div class="about-img">
+                <!-- Using object-fit to ensure image covers area nicely -->
+                <img src="GreenClubAKP Images.jpeg" alt="Volunteers planting trees" style="object-fit: cover; height: 400px;">
+            </div>
+            <div class="about-text">
+                <h3>Who We Are</h3>
+                <h2>Passionate About Our Planet</h2>
+                <p>Green Club Anakapalli is a club of environment lovers. It was established by Mr. K.Phani Bhushan Sridhar (Vriksha Mitra awardee and National level best teacher awardee) in 2015 with the support of his father late Dr. Ramalinga Swamy, a well known agricultural scientist.</p>
+                <p>Mr. Sridhar started his journey as a one man army but in a short time he got support from environment lovers. He was encouraged by retired forest ranger Sri B. Vinod Kumar and Karri Sanyasi Naidu. As a result, now the club is flourishing with nearly 100 members. The main motto of the club is to make an eco-friendly environment and to aware each and every person about the human relationship between plants and other living creatures. The main slogan of the club is: "Without trees, there is no life".</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activities Section -->
+      <section id="activities" class="activities">
+        <div>
+            <div class="section-header">
+                <h2>What We Do</h2>
+                <p>Our activities focus on education, preservation, and community building.</p>
+            </div>
+
+            <div class="cards-grid">
+                <!-- Card 1 -->
+                <article class="card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12,2L14.47,8.05L21,9.32L16.5,14.01L17.68,20.58L12,17.5L6.32,20.58L7.5,14.01L3,9.32L9.53,8.05L12,2M12,4.6L10.47,8.25C10.28,8.73 9.83,9.07 9.31,9.16L4.36,10.04L7.71,13.54C8.06,13.91 8.21,14.43 8.12,14.94L7.29,19.94L11.6,17.78C12.06,17.56 12.6,17.56 13.05,17.78L17.36,19.94L16.53,14.94C16.44,14.43 16.59,13.91 16.94,13.54L20.29,10.04L15.34,9.16C14.82,9.07 14.37,8.73 14.18,8.25L12,4.6Z" />
+                        </svg>
+                    </div>
+                    <h3>Community Gardens</h3>
+                    <p>We maintain local plots where we grow organic vegetables and native plants, providing fresh produce for the community and habitat for pollinators.</p>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12,18H6V14H12M21,14V12L20,7H4L3,12V14H4V20H14V14H18V20H20V14M20,4H4V6H20V4Z" />
+                        </svg>
+                    </div>
+                    <h3>Recycling Drives</h3>
+                    <p>Organizing monthly e-waste and plastic collection events to ensure harmful materials are disposed of correctly and kept out of landfills.</p>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z" />
+                        </svg>
+                    </div>
+                    <h3>Workshops</h3>
+                    <p>Hosting educational sessions on composting, sustainable living, and biodiversity to spread knowledge and inspire change.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="events">
+        <div>
+            <div class="section-header">
+                <center><h2>Upcoming Events</h2></center>
+                <center><p>Mark your calendars for our next green gatherings.</p></center>
+            </div>
+            <div class="events-grid">
+                <div class="event-card">
+                    <div class="event-image"><i class="fas fa-seedling"></i></div>
+                    <div class="event-content">
+                        <div class="event-date">March 15, 2024</div>
+                        <h3>Community Tree Planting</h3>
+                        <p>Join us for our annual tree planting event at Central Park!</p>
+                    </div>
+                </div>
+                <div class="event-card">
+                    <div class="event-image"><i class="fas fa-recycle"></i></div>
+                    <div class="event-content">
+                        <div class="event-date">March 22, 2024</div>
+                        <h3>Earth Day Cleanup</h3>
+                        <p>Celebrate Earth Day by cleaning up our local beaches and parks.</p>
+                    </div>
+                </div>
+                <div class="event-card">
+                    <div class="event-image"><i class="fas fa-users"></i></div>
+                    <div class="event-content">
+                        <div class="event-date">March 30, 2024</div>
+                        <h3>Sustainability Workshop</h3>
+                        <p>Learn practical tips for living a zero-waste lifestyle.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+    <br>
+
+    <!-- Gallery Section -->
+    <section class="gallery">
+        <div>
+            <div class="section-header">
+                <center><h2>Nature in Focus</h2></center>
+                <center><p style="color: rgba(255,255,255,0.8)">Snapshots from our recent activities.</p></center>
+            </div>
+    </section>
+
+    <div class="carousel">
+  <div class="slides">
+    <img src="Green Club Images-1.jpeg" class="slide active">
+    <img src="Green Club Images-2.jpeg" class="slide">
+    <img src="Green Club Images-3.jpeg" class="slide">
+    <img src="Green Club Images-4.jpeg" class="slide">
+    <img src="Green Club Images-5.jpeg" class="slide">
+
+  </div>
+
+  <!-- Controls -->
+  <button class="prev">&#10094;</button>
+  <button class="next">&#10095;</button>
+</div>
+
+    <!-- Join Section -->
+    <section id="join" class="join">
+        <div>
+            <div class="section-header">
+                <center><h2>Join the Green Club</h2></center>
+                <center><p>Ready to make a difference? Sign up today!</p></center>
+            </div>
+            <div class="form-container">
+                <form id="membershipForm" onsubmit="handleFormSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" placeholder="Rakesh Sharma" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="rakesh@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="interest">Primary Interest</label>
+                        <select id="interest">
+                            <option value="gardening">Gardening</option>
+                            <option value="recycling">Recycling & Cleanup</option>
+                            <option value="education">Education & Workshops</option>
+                            <option value="general">General Support</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Why do you want to join?</label>
+                        <textarea id="message" rows="4" placeholder="Tell us about yourself..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%">Submit Application</button>
+                </form>
+                <!-- Success Message -->
+                <div id="formSuccess" style="display:none; text-align:center; padding: 20px;">
+                    <svg style="width:50px; height:50px; fill:var(--primary-color); margin-bottom:15px;" viewBox="0 0 24 24">
+                        <path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"/>
+                    </svg>
+                    <h3>Thank you for joining!</h3>
+                    <p>We'll be in touch shortly with details about our next meeting.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Green Club</h4>
+                <p>Empowering communities to live sustainably and protect our natural world for future generations.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#activities">Our Activities</a></li>
+                    <li><a href="#events">Upcoming Events</a></li>
+                    <li><a href="#join">Volunteer</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul>
+                    <li>Email: greenclubakp@gmail.com</li>
+                    <li>Phone: 123 456 7890</li>
+                    <li>Anakapalli, Andhra Pradesh</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2014 Green Club Anakapalli. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileToggle = document.getElementById('mobileToggle');
+            const mobileNav = document.getElementById('mobileNav');
+            const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+            // Toggle Mobile Menu
+            function toggleMenu() {
+                mobileToggle.classList.toggle('active');
+                mobileNav.classList.toggle('active');
+                // Prevent body scroll when menu is open
+                document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+            }
+
+            mobileToggle.addEventListener('click', toggleMenu);
+
+            // Close menu when a link is clicked
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', toggleMenu);
+            });
+
+            // Handle Form Submit
+            window.handleFormSubmit = function(event) {
+                event.preventDefault();
+                const form = document.getElementById('membershipForm');
+                const successMsg = document.getElementById('formSuccess');
+                
+                const btn = form.querySelector('button');
+                const originalText = btn.innerText;
+                btn.innerText = 'Sending...';
+                btn.disabled = true;
+
+                setTimeout(() => {
+                    form.style.display = 'none';
+                    successMsg.style.display = 'block';
+                }, 1000);
+            };
+        });
+    </script>
+
+    <button id="scrollTopBtn" title="Go to top">↑</button>
+
+    <style>
+        /* Scroll to Top Button */
+#scrollTopBtn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: #2e7d32;
+  color: white;
+  cursor: pointer;
+  padding: 12px 15px;
+  border-radius: 50%;
+  display: none;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+#scrollTopBtn:hover {
+  background-color: #1b5e20;
+  transform: scale(1.1);
+}
+    </style>
+    
+    <script>
+// Get button
+const scrollBtn = document.getElementById("scrollTopBtn");
+
+// Show button when scrolling down
+window.onscroll = function () {
+  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+    scrollBtn.style.display = "block";
+  } else {
+    scrollBtn.style.display = "none";
+  }
+};
+
+// Scroll to top smoothly
+scrollBtn.onclick = function () {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+};
+</script>
+
+<style>
+    /* Carousel Container */
+.carousel {
+  position: relative;
+  max-width: 1000px;
+  margin: 40px auto;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+/* Slides */
+.slides {
+  position: relative;
+}
+
+.slide {
+  width: 100%;
+  display: none;
+  border-radius: 12px;
+}
+
+.slide.active {
+  display: block;
+}
+
+/* Buttons */
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 18px;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+.prev:hover, .next:hover {
+  background: rgba(0,0,0,0.7);
+}
+</style>
+
+<script>
+let index = 0;
+const slides = document.querySelectorAll(".slide");
+const prevBtn = document.querySelector(".prev");
+const nextBtn = document.querySelector(".next");
+
+function showSlide(i) {
+  slides.forEach(slide => slide.classList.remove("active"));
+  slides[i].classList.add("active");
+}
+
+// Next
+nextBtn.onclick = () => {
+  index = (index + 1) % slides.length;
+  showSlide(index);
+};
+
+// Prev
+prevBtn.onclick = () => {
+  index = (index - 1 + slides.length) % slides.length;
+  showSlide(index);
+};
+
+// Auto slide (optional)
+setInterval(() => {
+  index = (index + 1) % slides.length;
+  showSlide(index);
+}, 3000);
+</script>
+
+<div id="google_translate_element"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement(
+    {
+      pageLanguage: 'en',
+      includedLanguages: 'en,hi,te,ta,kn,ml',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    },
+    'google_translate_element'
+  );
+}
+</script>
+
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+</body>
+</html>
